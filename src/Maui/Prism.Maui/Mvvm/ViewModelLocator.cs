@@ -26,13 +26,15 @@ public static class ViewModelLocator
             null,
             propertyChanged: OnViewModelPropertyChanged);
 
-    internal static readonly BindableProperty NavigationNameProperty =
-        BindableProperty.CreateAttached("NavigationName", typeof(string), typeof(ViewModelLocator), null);
+    public static readonly BindableProperty NavigationNameProperty =
+        BindableProperty.CreateAttached("NavigationName", typeof(string), typeof(ViewModelLocator), null, defaultValueCreator: CreateDefaultNavigationName);
 
-    internal static string GetNavigationName(BindableObject bindable) =>
+    private static object CreateDefaultNavigationName(BindableObject bindable) => bindable.GetType().Name;
+
+    public static string GetNavigationName(BindableObject bindable) =>
         (string)bindable.GetValue(NavigationNameProperty);
 
-    internal static void SetNavigationName(BindableObject bindable, string name) =>
+    public static void SetNavigationName(BindableObject bindable, string name) =>
         bindable.SetValue(NavigationNameProperty, name);
 
     /// <summary>
